@@ -9,28 +9,33 @@ on:
 
 jobs:
   NextGen-Static-Analysis:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/dotnet/sdk:8.0
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 5.0.x
+    # - name: Setup .NET
+    #   uses: actions/setup-dotnet@v3
+    #   with:
+    #     dotnet-version: 5.0.x
+    # - name: Download ShiftLeft CLI
+    #   run: |
+    #     Invoke-WebRequest -Uri 'https://cdn.shiftleft.io/download/sl-latest-windows-x64.zip' -OutFile sl.zip
+    #     Expand-Archive -Path sl.zip -DestinationPath .
+
     - name: Download ShiftLeft CLI
       run: |
-        Invoke-WebRequest -Uri 'https://cdn.shiftleft.io/download/sl-latest-windows-x64.zip' -OutFile sl.zip
-        Expand-Archive -Path sl.zip -DestinationPath .
+        curl https://cdn.shiftleft.io/download/sl > ./sl && chmod a+rx ./sl 
 
-    - name: Build web api
-      #run: dotnet build netcoreWebapi
-      run: dotnet --info 
-    - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
+    # - name: Build web api
+    #   #run: dotnet build netcoreWebapi
+    #   run: dotnet --info 
+    # - name: Extract branch name
+    #   shell: bash
+    #   run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+    #   id: extract_branch
     - name: Analyze with NextGen Static Analysis
-      run: .\sl analyze --verbose --app shiftleft-csharp-demo --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --csharp netcoreWebapi/netcoreWebapi.csproj
+      run: ./sl analyze --verbose --app shiftleft-csharp-demo  --csharp netcoreWebapi/netcoreWebapi.csproj
       #run: |
       #  .\sl analyze --strict --app shiftleft-csharp-demo2 --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} .
       env:
