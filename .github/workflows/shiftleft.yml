@@ -35,7 +35,9 @@ jobs:
     #   run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
     #   id: extract_branch
     - name: Analyze with NextGen Static Analysis
-      run: ./sl analyze --verbose --app shiftleft-csharp-demo  --csharp netcoreWebapi/netcoreWebapi.csproj
+      run: |
+        ./sl analyze --verbose --app shiftleft-csharp-demo  --csharp netcoreWebapi/netcoreWebapi.csproj
+        ls -lart ~/.shiftleft
       #run: |
       #  .\sl analyze --strict --app shiftleft-csharp-demo2 --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} .
       env:
