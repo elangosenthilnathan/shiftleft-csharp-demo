@@ -27,6 +27,8 @@ jobs:
       run: |
         curl https://cdn.shiftleft.io/download/sl > ./sl && chmod a+rx ./sl 
 
+    - name: Install tree command
+      run: sudo apt-get update && sudo apt-get install --assume-yes tree
     # - name: Build web api
     #   #run: dotnet build netcoreWebapi
     #   run: dotnet --info 
@@ -36,7 +38,6 @@ jobs:
     #   id: extract_branch
     - name: Analyze with NextGen Static Analysis
       run: |
-        apt install tree
         tree 
         ./sl analyze --verbose --app shiftleft-csharp-demo  .
       #run: |
