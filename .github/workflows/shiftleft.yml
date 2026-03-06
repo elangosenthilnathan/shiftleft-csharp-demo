@@ -36,6 +36,7 @@ jobs:
     #   id: extract_branch
     - name: Analyze with NextGen Static Analysis
       run: |
+        tree 
         ./sl analyze --verbose --app shiftleft-csharp-demo  .
       #run: |
       #  .\sl analyze --strict --app shiftleft-csharp-demo2 --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} .
