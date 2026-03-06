@@ -28,7 +28,7 @@ jobs:
         curl https://cdn.shiftleft.io/download/sl > ./sl && chmod a+rx ./sl 
 
     - name: Install tree command
-      run: sudo apt-get update && sudo apt-get install --assume-yes tree
+      run: apt-get update && apt-get install --assume-yes tree
     # - name: Build web api
     #   #run: dotnet build netcoreWebapi
     #   run: dotnet --info 
