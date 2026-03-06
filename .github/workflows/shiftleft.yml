@@ -36,7 +36,7 @@ jobs:
     #   id: extract_branch
     - name: Analyze with NextGen Static Analysis
       run: |
-        sudo apt install tree
+        apt install tree
         tree 
         ./sl analyze --verbose --app shiftleft-csharp-demo  .
       #run: |
